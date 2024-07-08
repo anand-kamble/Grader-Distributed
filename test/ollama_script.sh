@@ -1,0 +1,1 @@
+OLLAMA_HOST=144.174.6.57:11434 ~/binaries/ollama serve

@@ -1,0 +1,1 @@
+cat ./ollama_script.sh | ssh class07 /bin/bash
