@@ -21,3 +21,4 @@ for machine in available_machines:
 
 # %%
 embeddings[0].get_text_embedding_batch(["hello world", "goodbye world"])
+# %%
