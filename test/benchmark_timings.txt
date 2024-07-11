@@ -1,0 +1,20 @@
+1 machines: 112.23366785049438 seconds
+2 machines: 69.97516822814941 seconds
+3 machines: 51.90928840637207 seconds
+4 machines: 39.60494065284729 seconds
+5 machines: 31.994385957717896 seconds
+6 machines: 24.17313551902771 seconds
+7 machines: 25.637701272964478 seconds
+8 machines: 25.679248809814453 seconds
+9 machines: 24.09020161628723 seconds
+10 machines: 57.917152881622314 seconds
+11 machines: 14.099214553833008 seconds
+12 machines: 14.550055265426636 seconds
+Error with 13 machines: Server error '500 Internal Server Error' for url 'http://class08:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+Error with 14 machines: [Errno 111] Connection refused
+Error with 15 machines: [Errno 111] Connection refused
+Error with 16 machines: [Errno 111] Connection refused
+Error with 17 machines: [Errno 111] Connection refused
+Error with 18 machines: Server error '500 Internal Server Error' for url 'http://class10:11434/api/generate'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
