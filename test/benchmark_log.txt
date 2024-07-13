@@ -1,0 +1,8 @@
+Benchmark started
+Time taken with 1 machines: 89.76032066345215 secondsError with 2 machines: 'float' object has no attribute 'response'
+Error with 4 machines: 'float' object has no attribute 'response'
+Error with 8 machines: 'float' object has no attribute 'response'
+Error with 16 machines: 'float' object has no attribute 'response'
+Error with 19 machines: 'float' object has no attribute 'response'
+
+Benchmark completed
