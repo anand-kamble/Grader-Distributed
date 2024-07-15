@@ -4,7 +4,6 @@ import os
 import time
 import concurrent.futures
 import asyncio
-from h11 import Data
 from ragas.integrations.llama_index import evaluate
 from ragas.metrics.critique import harmfulness
 from ragas.metrics import (
@@ -100,8 +99,8 @@ rag_dataset_df.to_dict().keys()
 
 dataset = dict()
 
-dataset["question"] = rag_dataset_df["query"].tolist()[:2]
-dataset["ground_truth"] = rag_dataset_df["reference_answer"].tolist()[:2]
+dataset["question"] = rag_dataset_df["query"].tolist()
+dataset["ground_truth"] = rag_dataset_df["reference_answer"].tolist()
 
 metrics = [
     faithfulness,
