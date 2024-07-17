@@ -99,8 +99,8 @@ rag_dataset_df.to_dict().keys()
 
 dataset = dict()
 
-dataset["question"] = rag_dataset_df["query"].tolist()
-dataset["ground_truth"] = rag_dataset_df["reference_answer"].tolist()
+dataset["question"] = rag_dataset_df["query"].tolist()[:50]
+dataset["ground_truth"] = rag_dataset_df["reference_answer"].tolist()[:50]
 
 metrics = [
     faithfulness,

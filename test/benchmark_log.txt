@@ -1,1 +1,8 @@
 Benchmark started
+Time taken with 1 machines: 1384.54185795784 seconds
+Time taken with 2 machines: 1049.4338548183441 seconds
+Time taken with 4 machines: 447.77367877960205 seconds
+Error with 8 machines: 'float' object has no attribute 'response'
+Time taken with 16 machines: 2170.913054704666 seconds
+Time taken with 19 machines: 814.4779534339905 seconds
+Benchmark completed
