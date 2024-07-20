@@ -5,6 +5,7 @@ from fastapi import responses
 from llama_index.llms.ollama import Ollama
 import time
 
+
 class ollama_distributed():
     def __init__(self, model: str, machines: List[str] = [], request_timeout: int = 60):
         self.machines = machines
@@ -37,13 +38,13 @@ class ollama_distributed():
         self.executor.shutdown()
         return results
 
-    def execute(self,queries):
+    def execute(self, queries):
         return asyncio.run(self.main(queries))
 
 
 machines = [
     "class01", "class02", "class03", "class04", "class05",
-    "class06", "class08", "class09", "class10",
+    "class06", "class07", "class08", "class09", "class10",
     "class11", "class12", "class13", "class14", "class15",
     "class16", "class17", "class18", "class19"
 ]
@@ -62,7 +63,6 @@ queries = [
 ]
 
 
-
 # ollama = ollama_distributed(
 #     machines=machines, model="llama3", request_timeout=240)
 
@@ -74,7 +74,8 @@ def benchmark(model, machines, queries, filename):
     with open(filename, "w") as file:
         for i in range(1, len(machines) + 1):
             subset_machines = machines[:i]
-            ollama = ollama_distributed(machines=subset_machines, model=model, request_timeout=240)
+            ollama = ollama_distributed(
+                machines=subset_machines, model=model, request_timeout=240)
 
             try:
                 start_time = time.time()
@@ -91,4 +92,6 @@ def benchmark(model, machines, queries, filename):
                 print(error_message)
                 file.write(error_message + "\n")
 
-benchmark(model="llama3", machines=machines, queries=queries, filename="benchmark_timings.txt")
+
+benchmark(model="llama3", machines=machines,
+          queries=queries, filename="benchmark_timings_18_7_2024.txt")

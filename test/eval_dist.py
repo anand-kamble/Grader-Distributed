@@ -14,6 +14,7 @@ from ragas.metrics import (
 
 )
 import json
+from timer import PerfCounterTimer
 from llama_index.core.settings import Settings
 from llama_index.core import VectorStoreIndex, StorageContext, load_index_from_storage
 from llama_index.llms.ollama import Ollama
@@ -99,8 +100,8 @@ rag_dataset_df.to_dict().keys()
 
 dataset = dict()
 
-dataset["question"] = rag_dataset_df["query"].tolist()[:50]
-dataset["ground_truth"] = rag_dataset_df["reference_answer"].tolist()[:50]
+dataset["question"] = rag_dataset_df["query"].tolist()[:20]
+dataset["ground_truth"] = rag_dataset_df["reference_answer"].tolist()[:20]
 
 metrics = [
     faithfulness,
@@ -250,23 +251,26 @@ def benchmark():
 
     with open(BENCHMARK_LOG, "w") as f:
         f.write("Benchmark started\n")
-        num_machines_list = [1, 2, 4, 8, 16, 19]
+        num_machines_list = [1] #, 2, 4, 8, 16, 19]
+        timer = PerfCounterTimer()
 
         for num_machines in num_machines_list:
             try:
-                start_time = time.time()
-                execute(num_machines)
-                end_time = time.time()
-                elapsed_time = end_time - start_time
-                results[num_machines] = elapsed_time
-                f.write(
-                    f"Time taken with {num_machines} machines: {elapsed_time} seconds")
+                with PerfCounterTimer(num_machines).timeit():
+                    start_time = time.time()
+                    execute(num_machines)
+                    end_time = time.time()
+                    elapsed_time = end_time - start_time
+                    results[num_machines] = elapsed_time
+                    f.write(
+                        f"Time taken with {num_machines} machines: {elapsed_time} seconds")
+                    
             except Exception as e:
                 error_message = f"Error with {num_machines} machines: {str(e)}"
                 f.write(error_message + "\n")
         
         f.write("\nBenchmark completed\n")
-        
+        PerfCounterTimer.report()
     executor.shutdown()
         
     return results
