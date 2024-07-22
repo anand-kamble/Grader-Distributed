@@ -44,5 +44,4 @@ class TaskScheduler:
                 print(f"An error occurred: {e}")
                 self.failed_tasks.append(
                     self.tasks[self.futures.index(future)])
-        PerfCounterTimer.report()
         return results, self.failed_tasks
