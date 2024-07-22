@@ -1,57 +1,48 @@
 from typing import List, Callable, Any
 import concurrent.futures
-from urllib import response
-import requests
-import random
-import time
+from timer import PerfCounterTimer
+import multiprocessing
 
 
-class task_scheduler:
-    def __init__(self):
-        self.executor = concurrent.futures.ThreadPoolExecutor()
+class TaskScheduler:
+
+    def __init__(self, max_workers: int = multiprocessing.cpu_count(), timeout: int = 60):
+        self.executor = concurrent.futures.ThreadPoolExecutor(
+            max_workers=max_workers
+        )
         self.tasks = []
         self.failed_tasks = []
+        self.futures = []
+        self.timer = PerfCounterTimer()
+        self.timeout = timeout
 
+    def add_task(self, id: str, task: Callable[..., Any], *args):
+        with PerfCounterTimer(id).timeit():
+            future = self.executor.submit(task, *args)
+            self.futures.append(future)
+            self.tasks.append((task, args))
+            future.add_done_callback(self._task_done)
 
-    def add_task(self, task: Callable[..., Any], *args):
-        self.tasks.append((task, args))
+    def _task_done(self, future):
+        try:
+            result = future.result()
+            print(f"Task completed with result: {result}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            self.failed_tasks.append(self.tasks[self.futures.index(future)])
 
     def execute_tasks(self):
-        futures = []
-        for i, (task, args) in enumerate(self.tasks):
-            futures.append(self.executor.submit(task, *args))
-        concurrent.futures.wait(futures)
-        
-        results = [future.result() for future in futures]
-        
-        for future in futures:
+        concurrent.futures.wait(self.futures, timeout=self.timeout)
+
+    def get_results(self):
+        results = []
+        for future in self.futures:
             try:
                 result = future.result()
                 results.append(result)
             except Exception as e:
                 print(f"An error occurred: {e}")
-                self.failed_tasks.append(self.tasks[futures.index(future)])
-        
+                self.failed_tasks.append(
+                    self.tasks[self.futures.index(future)])
+        PerfCounterTimer.report()
         return results, self.failed_tasks
-
-
-def call_api(machine: str):
-    res = requests.get(f"http://{machine}:11434/")
-    time.sleep(random.uniform(1, 5))
-    return res.text
-
-MACHINES = [
-    "class01", "class02", "class03", "class04", "class05",
-    "class06", "class07", "class08", "class09", "class10",
-    "class11", "class22s", "class13", "class14", "class15",
-    "class16", "class17", "class18", "class19"
-]
-
-ts = task_scheduler()
-
-for machine in MACHINES:
-    ts.add_task(call_api, machine)
-
-results = ts.execute_tasks()
-
-print(results)

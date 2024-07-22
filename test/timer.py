@@ -1,11 +1,8 @@
 import time
 import numpy as np
-import threading
 from contextlib import contextmanager
 from collections import defaultdict
 import pandas as pd
-from pprint import pprint
-
 
 class PerfCounterTimer:
     timings = defaultdict(list)
