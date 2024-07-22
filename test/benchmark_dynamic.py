@@ -20,9 +20,10 @@ MACHINES = [
 ts = TaskScheduler()
 
 # Dynamically add tasks to the scheduler
-for machine in MACHINES:
-    ts.add_task(machine, call_api, machine)
-    time.sleep(0.1)  # Simulate dynamic task addition
+for i in range(500):
+    for machine in MACHINES:
+        ts.add_task(machine, call_api, machine)
+        time.sleep(random.uniform(0.1, 0.5))
 
 ts.execute_tasks()
 
