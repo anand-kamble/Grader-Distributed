@@ -49,9 +49,14 @@ queries = [x["text"] for x in dataset["question"]]
 ts = TaskScheduler()
 exp_start_time = time.perf_counter()
 # Dynamically add tasks to the scheduler
+# for q in queries:
+#     llm = llms[random.choice(MACHINES)]
+#     ts.add_task(machine, query_api, llm, q)
+
 for i, q in enumerate(queries):
     llm = llms[MACHINES[i % len(MACHINES)]]
     ts.add_task(machine, query_api, llm, q)
+
 
 ts.execute_tasks()
 #%%
@@ -76,7 +81,7 @@ df = pandas.DataFrame(results, columns=["query", "response", "start_time", "end_
 df["exp_start_time"] = exp_start_time
 df["exp_end_time"] = exp_end_time
 # Save the dataframe to a CSV file
-df.to_csv(f"static_results_with_10000_{time.time()}.csv")
+df.to_csv(f"random_results_with_10000_{time.time()}.csv")
 #%%
 print("Total time:", exp_end_time - exp_start_time)
 # %%
