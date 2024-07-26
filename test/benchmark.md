@@ -51,10 +51,6 @@ async def main(self, queries):
 
 ```
 
-# Improvments 
-
-Currently this method evenly distributes the qureies across all the machines which is like the `Round Robin` algorithm, but it can have bottnecks in case one machine gets stuck.  
-In next version I will be trying to implement the dynamic distribution to make it more efficient.
 
 # Results
 

@@ -38,3 +38,8 @@ OR
 ```bash
 python eval_dist.py
 ```
+
+# Benchmarking
+
+All the benchmarking is done using `llama-index` and `Ollama`.
+You can find the details in the [benchmark.md](./test/benchmark.md)
